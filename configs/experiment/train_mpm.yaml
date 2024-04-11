@@ -1,0 +1,48 @@
+# @package _global_
+
+# Order indicates overwriting
+defaults:
+  - override /model: vq_vae_mpm.yaml
+
+trainer:
+  max_epochs: 200
+
+datamodule:
+  _target_: src.datamodules.iterable_lightning.PointCloudDataModule
+  data_conf:
+    iterator:
+      _target_: src.datamodules.loading.JetClassIterator
+      _partial_: True
+      n_load: 20
+      max_files: null
+      processes: null
+      path: ${paths.jetclass_data}
+      # processes: 
+      #   - 'QCD'
+      #   - 'higgs'
+    # Full JetClass
+    iterator_wrapper:
+      _target_: src.datamodules.iterable_dataset.ModelClassifyIterator
+      _partial_: True
+      model_path: /srv/beegfs/scratch/groups/rodem/anomalous_jets/taggers/vq_vae/id_4191644
+    n_steps: 10_000_000
+    n_jets: 50_000
+    n_csts: 64
+    datasets:
+      c0: QCD_jj_pt_450_1200
+    coordinates:
+      edge: []
+      node:
+      - del_eta
+      - del_phi
+      - log_squash_pt
+      high: []
+    del_r_edges: 0
+  loader_kwargs:
+    pin_memory: true
+    batch_size: 256
+    num_workers: 1
+    drop_last: False
+
+project_name: bert
+network_name: bert_${now:%Y-%m-%d}_${now:%H-%M-%S-%f}

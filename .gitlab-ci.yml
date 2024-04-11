@@ -1,0 +1,21 @@
+stages:
+  - build
+
+build_latest:
+  stage: build
+  only:
+    changes:
+      - docker/base.Dockerfile
+      - requirements.txt
+      - .gitlab-ci.yml
+  tags: # CERN specific
+    - docker-image-build
+  except: # Dont run daily
+    - schedules
+  script: # Needs to be defined, but is overwritten
+    - "echo"
+  variables: # CERN specific tags
+    TAG: latest
+    IMAGE_NAME: mpm
+    TO: '${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${IMAGE_NAME}:${TAG}'
+    DOCKER_FILE: docker/base.Dockerfile

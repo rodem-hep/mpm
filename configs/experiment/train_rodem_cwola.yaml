@@ -1,0 +1,53 @@
+# @package _global_
+
+# Order indicates overwriting
+defaults:
+  - override /datamodule: rodem.yaml
+  - override /model: cwola_tune.yaml
+
+trainer:
+  max_epochs: 20
+
+callbacks:
+  backbone_fine_tune:
+    _target_: src.optimizers.fine_tuning.FeatureExtractorFreezeUnfreeze
+    unfreeze_at_epoch: 2
+  train_end:
+    _target_: src.callbacks.evaluate_end.EvalEnd
+    dirpath: ${paths.full_path}/output
+
+datamodule:
+  preproc_fn:
+    _target_: src.datamodules.preprocessing.PreProccessGraphs
+    n_csts: 64
+    del_r_edges: 9999
+    edge_coords: []
+    csts_coords: 
+      - del_eta
+      - del_phi
+      - log_squash_pt
+    high_coords: []
+    transformation_list: []
+    transformation_prob: []
+
+  valid_set:
+    _target_: src.datamodules.rodem.RODEMIdealCwola
+    processes: [QCD, ttbar]
+    n_samples: 500_000
+
+  train_set:
+    _target_: src.datamodules.rodem.RODEMIdealCwola
+    processes: [QCD, ttbar]
+    n_samples: 1_000_000
+    n_files: 1
+    n_start: 0
+    n_signal: 10_000
+
+  loader_kwargs:
+    pin_memory: false
+    batch_size: 256
+    num_workers: 1
+    drop_last: False
+
+project_name: fine_tune
+network_name: bert_${now:%Y-%m-%d}_${now:%H-%M-%S-%f}

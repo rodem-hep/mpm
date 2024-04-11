@@ -1,0 +1,4 @@
+_target_: src.optimizers.SAM.HydraSam
+_partial_: true
+lr: 1.0e-4
+weight_decay: 1.0e-4

@@ -1,0 +1,14 @@
+_target_: pytorch_lightning.Trainer
+
+min_epochs: 1
+max_epochs: 1000
+enable_progress_bar: True
+accelerator: auto
+devices: auto
+gradient_clip_val: 5
+precision: 32
+check_val_every_n_epoch: 1
+num_sanity_val_steps: 0
+
+# Interpolated
+default_root_dir: ${paths.full_path}

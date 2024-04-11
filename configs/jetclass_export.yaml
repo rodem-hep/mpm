@@ -1,0 +1,48 @@
+# @package _global_
+
+defaults:
+  - hydra: default.yaml
+  - paths: default.yaml
+  - datamodule: pc_data.yaml
+  - _self_
+
+tag: ''
+
+resume: False
+# List of test datasets to run over
+datasets:
+  - [ttbar, WZ]
+
+project_name: fine_tune 
+network_name: id_5197757 
+
+
+datamodule:
+  _target_: src.datamodules.iterable_lightning.PointCloudDataModule
+  data_conf:
+    iterator:
+      _target_: src.datamodules.loading.JetClassIterator
+      _partial_: True
+      n_load: 20
+      processes: 'QCD'
+      path: ${paths.jetclass_data}
+    iterator_wrapper:
+      _target_: src.datamodules.iterable_dataset.ModelClassifyIterator
+      _partial_: True
+      model_path: /srv/beegfs/scratch/groups/rodem/anomalous_jets/taggers/vq_vae/id_4191644
+    n_steps: 20_000_000
+    n_jets: 20_000_000
+    n_csts: 64
+    coordinates:
+      edge: []
+      node:
+      - del_eta
+      - del_phi
+      - log_squash_pt
+      high: []
+    del_r_edges: 0
+  loader_kwargs:
+    pin_memory: false
+    batch_size: 256
+    num_workers: 1
+    drop_last: False

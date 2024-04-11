@@ -1,0 +1,41 @@
+_target_: src.datamodules.new_module.RodemDataModule
+
+preproc_fn:
+  _target_: src.datamodules.preprocessing.PreProccessGraphs
+  n_csts: 64
+  del_r_edges: 0
+  edge_coords: []
+  csts_coords: ["del_eta", "del_phi", "log_squash_pt"]
+  high_coords: []
+  transformation_list: []
+  transformation_prob: []
+
+valid_set:
+  _target_: src.datamodules.loading.JetClassMappable
+  _partial_: true
+  dset: val
+  n_load: null
+  n_samples: null
+  processes: null
+  max_files: 10
+  features: null
+  path: ${paths.jetclass_data}
+
+train_set:
+  _target_: src.datamodules.loading.JetClassMappable
+  _partial_: true
+  dset: train
+  n_load: null
+  n_samples: null
+  processes: null
+  max_files: 10
+  features: null
+  path: ${paths.jetclass_data}
+
+test_set: null # Not defined at train time
+
+loader_kwargs:
+  pin_memory: true
+  batch_size: 128
+  num_workers: 0
+  drop_last: False

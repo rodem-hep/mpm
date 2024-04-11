@@ -1,0 +1,26 @@
+# Directories
+__pycache__
+data/
+logs/
+outputs/
+plots/
+.vscode/
+container/
+wandb/
+configs/sweeps/
+slurmscripts/
+user**/**
+**user**
+*.pytest
+# File types
+.mypy*
+*.pyc
+*.ipynb
+*.out
+*.pdf
+*.sh
+*.log
+*workspace
+*.idea
+*.key
+*.tex

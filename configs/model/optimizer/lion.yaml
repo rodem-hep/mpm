@@ -1,0 +1,4 @@
+_target_: mattstools.mattstools.optimisers.Lion
+_partial_: true
+lr: 5.0e-4
+weight_decay: 1.0e-4

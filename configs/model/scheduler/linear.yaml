@@ -1,0 +1,9 @@
+mattstools:
+    name: linear_decay
+    # n_warmup: 100
+    n_warmup: 10_000
+lightning:
+  monitor: valid/total_loss
+  interval: step
+  frequency: 1
+  

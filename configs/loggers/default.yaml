@@ -1,0 +1,14 @@
+wandb:
+  _target_: pytorch_lightning.loggers.wandb.WandbLogger
+  offline: False
+  id: null
+  log_model: False
+  project: ${project_name}
+  name: ${network_name}
+  save_dir: ${paths.full_path}
+  resume: ${full_resume}
+
+# csv:
+#   _target_: pytorch_lightning.loggers.csv_logs.CSVLogger
+#   save_dir: ${paths.full_path}
+#   name: csv_logs/

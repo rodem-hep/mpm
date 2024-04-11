@@ -1,0 +1,8 @@
+mattstools:
+  name: warmup
+  # num_steps: 50_000
+  num_steps: 50_000
+lightning:
+  monitor: valid/total_loss
+  interval: step
+  frequency: 1

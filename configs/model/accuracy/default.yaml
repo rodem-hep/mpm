@@ -1,0 +1,11 @@
+_target_: torchmetrics.Accuracy
+_partial_: true
+threshold: 0.5
+num_labels: null
+average: micro
+multidim_average: global
+top_k: 1
+ignore_index: null
+validate_args: True
+
+# task and num_classes are set by n_classes from data

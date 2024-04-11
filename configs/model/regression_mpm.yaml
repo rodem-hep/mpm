@@ -1,0 +1,21 @@
+_target_: src.models.bert.RegressBert
+
+order_inputs: false
+max_mask: 0.3
+use_class_weights: 0
+
+normaliser_config:
+  max_n: 1_000_000
+
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 5.0e-5
+  weight_decay: 0.01
+
+
+defaults:
+  - _self_
+  - scheduler: linear.yaml 
+  - encoder: backbone_small.yaml
+  - positional_encoder: trans_encoder.yaml

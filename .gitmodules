@@ -1,0 +1,3 @@
+[submodule "vqtorch"]
+    path = vqtorch
+    url = git://github.com:sambklein/vqtorch.git

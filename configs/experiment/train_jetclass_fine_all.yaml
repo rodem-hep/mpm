@@ -1,0 +1,23 @@
+# @package _global_
+
+# Order indicates overwriting
+defaults:
+  - override /datamodule: map_jetclass.yaml
+  - override /model: fine_tune.yaml
+  - override /callbacks: early_stop.yaml
+
+trainer:
+  max_epochs: 100
+
+callbacks:
+  backbone_fine_tune:
+    _target_: src.optimizers.fine_tuning.FeatureExtractorFreezeUnfreeze
+    unfreeze_at_epoch: 2
+
+datamodule:
+  train_set:
+    n_samples: 1000
+
+project_name: fine_tune
+# network_name: debug
+network_name: bert_${now:%Y-%m-%d}_${now:%H-%M-%S-%f}

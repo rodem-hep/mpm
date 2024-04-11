@@ -1,0 +1,60 @@
+_target_: src.models.jet_vq_vae.VqVae
+
+alpha: 10
+lat_dim: &latent_dim 16
+loss_fn: 
+  _target_: torch.nn.L1Loss
+  reduction: "none"
+
+vq_kwargs:
+  feature_size: *latent_dim
+  num_codes: 512
+  beta: 0.9
+  sync_nu: 2.0
+  affine_lr: 2.0
+  affine_groups: 1
+  replace_freq: 10
+  inplace_optimizer: null
+  kmeans_init: True
+  norm: 'none'
+  cb_norm: 'none'
+
+normaliser_config:
+  max_n: 1_000_000
+
+encoder: &encoder
+  _target_: mattstools.mattstools.transformers.FullTransformerEncoder
+  _partial_: True
+  node_embd_config: &densenet
+      num_blocks: 1
+      hddn_dim: 256
+      nrm: layer
+      act_h: lrlu
+  edge_embd_config: *densenet
+  te_config:
+    model_dim: &dim 128
+    num_layers: &n_layers 3
+    mha_config: &mha
+      num_heads: 16
+      drp: 0.1
+      init_zeros: True
+      do_layer_norm: True
+    dense_config: &zeronet
+      <<: *densenet
+      output_init_zeros: True
+  outp_embd_config:
+      num_blocks: 1
+      hddn_dim: 256
+      act_h: lrlu
+
+decoder: *encoder
+
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 1.0e-4
+  weight_decay: 0.01
+
+defaults:
+  - _self_
+  - scheduler: linear.yaml

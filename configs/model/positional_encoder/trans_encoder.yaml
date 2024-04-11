@@ -1,0 +1,22 @@
+_target_: mattstools.mattstools.transformers.FullTransformerEncoder
+_partial_: True
+node_embd_config: &densenet
+  num_blocks: 1
+  hddn_dim: 128
+  # hddn_dim: 256
+  nrm: layer
+  act_h: lrlu
+edge_embd_config: *densenet
+te_config:
+  model_dim: 256
+  # model_dim: 512
+  num_layers: 2
+  mha_config: &mha
+    num_heads: 8
+    drp: 0.1
+    init_zeros: True
+    do_layer_norm: True
+  dense_config: &zeronet
+    <<: *densenet
+    output_init_zeros: True
+outp_embd_config: *densenet

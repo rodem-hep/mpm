@@ -1,0 +1,11 @@
+# output dir will be created by hydra
+data_dir: /srv/beegfs/scratch/groups/rodem/anomalous_jets/virtual_data
+rodem_data: /srv/beegfs/scratch/groups/rodem/anomalous_jets/rodem_neat/
+jetclass_data: /srv/beegfs/scratch/groups/rodem/anomalous_jets/data/JetClass/Pythia/
+output_dir: /srv/beegfs/scratch/groups/rodem/anomalous_jets/taggers
+pretrained_model: null
+vq_vae_model: null
+
+# Interpolated
+root_dir: ${oc.env:PROJECT_ROOT}
+full_path: ${paths.output_dir}/${project_name}/${network_name}

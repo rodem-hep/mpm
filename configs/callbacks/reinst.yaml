@@ -1,0 +1,16 @@
+model_checkpoint:
+  _target_: pytorch_lightning.callbacks.ModelCheckpoint
+  dirpath: ${paths.full_path}/checkpoints
+  filename: best_{epoch:03d}
+  monitor: valid/total_loss
+  mode: min
+  # every_n_epochs: 1
+  save_last: True
+  auto_insert_metric_name: False
+
+matcher:
+  _target_: src.optimizers.opt_matcher.OptMatcher
+
+lr_monitor:
+  _target_: pytorch_lightning.callbacks.LearningRateMonitor
+  logging_interval: step

@@ -1,0 +1,4 @@
+wandb:
+  _target_: pytorch_lightning.loggers.wandb.WandbLogger
+  offline: true
+  mode: disabled

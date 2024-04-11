@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - hydra: default.yaml
+  - paths: default.yaml
+  - _self_
+
+get_best: True
+
+datamodule:
+  test_set:
+    _target_: src.datamodules.rodem.RODEMMappable
+    _partial_: true
+    path: /srv/beegfs/scratch/groups/rodem/anomalous_jets/rodem_neat/
+    dset: test
+  loader_kwargs:
+    batch_size: 256
+    num_workers: 8
+
+# List of test datasets to run over
+processes:
+  - QCD
+  - ttbar
+  - W
+
+project_name: fine_tune
+network_name: id_4885172

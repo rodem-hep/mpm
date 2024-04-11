@@ -1,0 +1,41 @@
+# @package _global_
+
+# Order indicates overwriting
+defaults:
+  - override /model: jet_vq_vae.yaml
+
+trainer:
+  limit_val_batches: 100
+
+datamodule:
+  _target_: src.datamodules.iterable_lightning.PointCloudDataModule
+  data_conf:
+    iterator:
+      _target_: src.datamodules.loading.JetClassIterator
+      _partial_: True
+      n_load: 10
+      features: null
+      max_files: null
+      processes: null
+      path: ${paths.jetclass_data}
+    n_steps: 100_000
+    n_jets: 50_000
+    n_csts: 64
+    datasets:
+      c0: QCD_jj_pt_450_1200
+    coordinates:
+      edge: []
+      node:
+      - del_eta
+      - del_phi
+      - log_squash_pt
+      high: []
+    del_r_edges: 0
+  loader_kwargs:
+    pin_memory: false
+    batch_size: 64
+    num_workers: 0
+    drop_last: True
+
+project_name: vq_vae
+network_name: vq_${now:%Y-%m-%d}_${now:%H-%M-%S-%f}

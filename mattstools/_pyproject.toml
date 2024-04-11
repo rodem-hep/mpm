@@ -1,0 +1,47 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mattstools"
+version = "1.0.0"
+description = "ome common utilities used in my DL projects"
+readme = "README.md"
+authors = [
+    { name = "Matthew Leigh", email = "matthew.leigh@unige.ch.com" }
+]
+license = {file = "LICENSE"}
+requires-python = ">=3.9"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["feed", "reader", "tutorial"]
+dependencies = [
+    "dotmap",
+    "geomloss",
+    "matplotlib",
+    "nflows",
+    "numpy",
+    "pandas",
+    "PyYAML",
+    "scikit_learn",
+    "scipy",
+    "setuptools",
+    "torch",
+    "tqdm",
+    "wandb",
+]
+packages=["mattstools", "mattstools.flows", "mattstools.gnets"]
+
+[project.optional-dependencies]
+dev = ["black", "bumpver", "isort", "pip-tools"]
+
+[project.urls]
+Homepage = "https://gitlab.cern.ch/mleigh/mattstools"
+
+[project.scripts]
+realpython = "reader.__main__:main"

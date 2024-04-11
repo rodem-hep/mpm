@@ -1,0 +1,38 @@
+_target_: src.datamodules.new_module.RodemDataModule
+
+preproc_fn:
+  _target_: src.datamodules.preprocessing.PreProccessGraphs
+  n_csts: 64
+  del_r_edges: 0
+  edge_coords: []
+  csts_coords: ["del_eta", "del_phi", "log_squash_pt"]
+  # high_coords: ["mass", "pt", "num_csts"]
+  high_coords: []
+  transformation_list: []
+  transformation_prob: []
+
+valid_set:
+  _target_: src.datamodules.rodem.RODEMIterable
+  _partial_: true
+  path: ${paths.rodem_data}
+  dset: val
+  processes: [QCD, ttbar]
+  n_start: 0
+  n_files: 5
+
+train_set:
+  _target_: src.datamodules.rodem.RODEMIterable
+  _partial_: true
+  path: ${paths.rodem_data}
+  dset: train
+  processes: [QCD, ttbar]
+  n_start: 5
+  n_files: null
+
+test_set: null # Not defined at train time
+
+loader_kwargs:
+  pin_memory: true
+  batch_size: 128
+  num_workers: 2
+  drop_last: False

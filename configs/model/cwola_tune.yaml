@@ -1,0 +1,25 @@
+_target_: src.models.bert.FineTuner
+path_spec: ${paths.output_dir}/${paths.pretrained_model}
+
+reinstantiate: False
+train_backbone: True
+
+finaliser:
+  _target_: mattstools.mattstools.modules.SingleLinear
+  _partial_: True
+  bias: False
+
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 1.0e-5
+  weight_decay: 0.01
+
+scheduler:
+  mattstools:
+    n_warmup: 10
+
+defaults:
+  - scheduler: linear.yaml 
+  # - scheduler: no_warmup.yaml 
+  - _self_

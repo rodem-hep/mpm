@@ -1,0 +1,43 @@
+# pytorch / deep learning
+torch==2.0.0
+torchvision==0.15.1
+pytorch-lightning==2.0.0
+torchmetrics==0.11.4
+geomloss==0.2.5
+wandb==0.14.0
+
+# Jet specific tools
+jet-utilities==0.0.1 # For loading RODEM data
+energyflow==1.3.2
+pyjet==1.9.0
+jetnet==0.2.3.post1
+pyBumpHunter==0.4.2
+
+# hydra
+hydra-core==1.2.0
+hydra-colorlog==1.3.2
+
+# plotting
+matplotlib==3.7.1
+seaborn==0.12.2
+plotly==5.13.1
+
+# data science
+numpy==1.23.5
+scipy==1.10.1
+scikit-learn==1.2.2
+scikit-hep==5.0.0
+pandas==1.5.3
+tables==3.8.0
+h5py==3.8.0
+pykeops==2.1.1
+
+# other
+black==23.1.0
+pylint==2.17.0
+dotmap==1.3.30
+pyrootutils==1.0.4
+pre-commit==3.2.0
+rich==13.3.2
+pytest==7.2.2
+pre-commit

@@ -1,0 +1,38 @@
+_target_: src.datamodules.module.PointCloudDataModule
+
+val_frac: 0.1
+data_conf:
+  path: ${paths.data_dir}
+  datasets:
+    c0: QCD_jj_pt_450_1200
+  n_jets: 2_000_000
+  n_csts: 64
+  coordinates:
+    edge:
+    - del_R
+    - log_kt
+    - z
+    - log_m
+    - psi
+    - dot_prod
+    node:
+    - del_eta
+    - del_phi
+    - log_pt
+    high:
+    - log_pt
+    - log_mass
+  min_n_csts: 1
+  leading: True
+  recalculate_jet_from_pc: False
+  incl_substruc: False
+  del_r_edges: 0
+  boost_mopt: 0
+  augmentation_list: none
+  augmentation_prob: 0
+
+loader_kwargs:
+  pin_memory: false
+  batch_size: 128
+  num_workers: 0
+  drop_last: True

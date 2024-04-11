@@ -1,0 +1,7 @@
+mattstools:
+  name: cyclicwithwarmup
+  epochs_per_cycle: 4
+lightning:
+  monitor: valid/total_loss
+  interval: step
+  frequency: 1
