@@ -178,7 +178,6 @@ class JetData(IterableDataset):
         self.n_nodes = n_csts
         self.datasets = datasets.copy()
         self.coordinates = deepcopy(coordinates)
-        # TODO should use this
         self.min_n_csts = min_n_csts
         self.leading = leading
         self.recalculate_jet_from_pc = recalculate_jet_from_pc
@@ -201,13 +200,6 @@ class JetData(IterableDataset):
             boost_mopt,
         )
         self.n_classes = n_classes or self.iterator.n_classes
-
-        # TODO how to do this?
-        # # Check for Nan's (happens sometimes...)
-        # if np.isnan(self.high_data).any():
-        #     raise ValueError("Detected NaNs in the jet data!")
-        # if np.isnan(self.node_data).any():
-        #     raise ValueError("Detected NaNs in the constituent data!")
 
     def plot(self, max_events: int = 10_000) -> None:
         """Plot the collection of inputs

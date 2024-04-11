@@ -67,7 +67,6 @@ class Bert(LightningModule):
         self.n_classes = n_classes
         self.max_mask = max_mask
         self.use_class_weights = use_class_weights
-        # TODO this isn't learnable unless you can backprob through the iterative norm layer
         self.masked_token = nn.Parameter(T.ones(1, self.node_dim))
         self.register_buffer("class_weights", T.ones(self.n_classes))
         self.loss_fn = nn.CrossEntropyLoss(reduction="none", weight=self.class_weights)
@@ -106,7 +105,7 @@ class Bert(LightningModule):
         else:
             self.pos_encode = False
 
-        # TODO should we use the .compute method of these metrics to track them?
+        # TODO should use the .compute method of these metrics to track them
         self.metrics = nn.ModuleDict(
             {
                 "accuracy": Accuracy(task="multiclass", num_classes=self.n_classes),
@@ -508,7 +507,6 @@ class IterableBertFixedEncoding(Bert):
 
     def preprocess_inputs(self, sample: tuple):
         with T.no_grad():
-            # TODO set the inputs to their centroid values as an option
             sample[0] = sample[-1]
             sample[-1], code = self.labeller(sample[1])
             if self.quantize_inpt:
@@ -660,7 +658,6 @@ class FineTuner(LightningModule):
         )
 
     def log_wandb(self, loss: T.Tensor, metrics: dict, tag: str):
-        # TODO code duplication with Bert, build subclass
         self.log(f"{tag}/total_loss", loss)
         for key, value in metrics.items():
             self.log(f"{tag}/{key}", value)

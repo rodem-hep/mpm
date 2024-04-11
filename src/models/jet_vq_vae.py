@@ -19,7 +19,6 @@ class VqVae(LightningModule):
     """
     An transformer based vector quantised autoencoder for point cloud data using
     transformers.
-    TODO should write a base class for autoencoders to reduce code duplication...
     """
 
     def __init__(
@@ -84,8 +83,6 @@ class VqVae(LightningModule):
         """
 
         # Pass the inputs through the normalisation layers
-        # TODO might need to skip
-        # self.node_norm.frozen.item()
         nodes = self.node_norm(nodes, mask)
         if self.high_dim:
             high = self.high_norm(high)
@@ -98,7 +95,6 @@ class VqVae(LightningModule):
         z_q_flat, vq_dict = self.quantizer(latents[mask].unsqueeze(-1))
         # Replace the quantized latents with the original latents
         z_q = T.zeros_like(latents)
-        # TODO quantizer is returning float32, should be float16
         # This breaks the backward step...
         z_q[mask] = z_q_flat.squeeze(-1).to(latents)
         # z_q = latents
@@ -174,7 +170,6 @@ class VqVae(LightningModule):
         # Pass through the network
         edges, csts, high, adjmat, mask, label = sample
         rec_nodes, latents, vq_loss = self.forward(csts, high, mask)
-        # TODO this should be added internally to the vq_layer
         dist = T.cdist(latents.view(-1, self.lat_dim), self.quantizer.codebook.weight)
         code_label = T.argmin(dist, dim=-1).view(csts.shape[:2])
         return {

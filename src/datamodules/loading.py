@@ -3,12 +3,8 @@ from copy import deepcopy
 from itertools import cycle, islice
 from pathlib import Path
 
-# TODO this first function doesn't work for some reason
-from typing import Dict, Mapping, Tuple, Union
-
 import awkward as ak
 import numpy as np
-import pandas as pd
 import uproot
 from torch.utils.data import Dataset
 from src.datamodules.preprocessing import NoPreProccessing, PreProccessBase
@@ -104,7 +100,6 @@ def load_jetclass(filepath, treename=None, n_csts: int = 64, features: list = No
     ).transpose(0, 2, 1)
 
     nan_mx = np.isnan(part_data)
-    # TODO check that there aren't any that don't all have zeros?
     mask = ~np.any(nan_mx, axis=-1)
     part_data[nan_mx] = 0
 
@@ -176,7 +171,6 @@ class JetClassIterator(IteratorBase):
         self.dset = dset
         self.features = features
         # Get the path to the set of files to load
-        # TODO unhardcode
         data_path = Path(path)
         if dset == "train":
             direct = data_path / "train_100M"
@@ -222,9 +216,7 @@ class JetClassIterator(IteratorBase):
         self.n_samples = int(1e5) * np.prod(stacked_files.shape)
         self.file_list = stacked_files.flatten().tolist()
         # Build an infinite iterator over the file list
-        # TODO using cycle slightly minimising the amount of shuffling that is done, can you do better?
         self.file_iterator = batched(cycle(self.file_list), self.n_load)
-        # TODO can this class be generalised?
         self.n_nodes = n_nodes
         self.load_func = load_jetclass
         # Set the index
@@ -298,7 +290,6 @@ class JetClassMappable(Dataset):
         self.features = features
         self.preproc_fn = preproc_fn
         # Get the path to the set of files to load
-        # TODO unhardcode
         data_path = Path(path)
         if dset == "train":
             direct = data_path / "train_100M"

@@ -75,7 +75,7 @@ def quantized_data(
     labels[~mask] = labels[0, 0]
     # Assume all labels are in the N to save time + memory
     unique_labels = np.unique(labels.reshape(-1)[: int(1e5)])
-    # Lazy solution, TODO do something faster and memory efficient
+    # Lazy solution
     new_labels = np.zeros_like(labels)
     for i in range(len(unique_labels)):
         new_labels[labels == i] = i
@@ -134,7 +134,6 @@ def quantized_data(
         unique_labels = np.arange(cnt)
 
     if not use_quantised:
-        # TODO if you want to use this you will need the scaling
         nodes = data_nodes
         nodes[..., -1] /= 6
 
